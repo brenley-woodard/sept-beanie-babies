@@ -33,3 +33,10 @@ export function renderBeanie(beanie) {
 
     return li;
 }
+
+export function renderAstroOption(astro) {
+    const option = document.createElement('option');
+    option.value = astro.name;
+    option.textContent = astro.name;
+    return option;
+}
