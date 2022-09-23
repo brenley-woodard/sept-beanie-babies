@@ -1,14 +1,14 @@
 /* Imports */
-import { getBeanies, getAstro } from './fetch-utils.js';
-import { renderAstroOption, renderBeanie } from './render-utils.js';
+import { getBeanies, getAstroSigns } from './fetch-utils.js';
+import { renderBeanie, renderAstroSignOption } from './render-utils.js';
 
 /* Get DOM Elements */
 const beanieList = document.getElementById('beanie-list');
-const astroSelect = document.getElementById('astro-sign-select');
+const astroSignSelect = document.getElementById('astro-sign-select');
 
 /* State */
 //let error = null;
-let astros = [];
+let astroSigns = [];
 let beanies = [];
 let error = null;
 
@@ -16,10 +16,14 @@ let error = null;
 window.addEventListener('load', async () => {
     findBeanies();
 
-    const response = await getAstro();
+    const response = await getAstroSigns();
 
     error = response.error;
-    beanies = response.data;
+    astroSigns = response.data;
+
+    if (!error) {
+        displayAstroSignOptions();
+    }
 });
 
 async function findBeanies(title, astroSign) {
@@ -32,6 +36,7 @@ async function findBeanies(title, astroSign) {
         displayBeanies();
     }
 }
+
 /* Display Functions */
 function displayBeanies() {
     beanieList.innerHTML = '';
@@ -42,14 +47,15 @@ function displayBeanies() {
     }
 }
 
-function displayAstroOptions() {
-    for (const astro of astros) {
-        const option = renderAstroOption(astro);
-        astroSelect.append(option);
+function displayAstroSignOptions() {
+    for (const astroSign of astroSigns) {
+        // console.log(renderAstroSign);
+        const option = renderAstroSignOption(astroSign);
+        astroSignSelect.append(option);
     }
 }
 
 // (don't forget to call any display functions you want to run on page load!)
 displayBeanies();
-displayAstroOptions();
-renderAstroOption();
+displayAstroSignOptions();
+renderAstroSignOption(astroSigns);
