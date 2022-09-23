@@ -5,6 +5,7 @@ import { renderBeanie, renderAstroSignOption } from './render-utils.js';
 /* Get DOM Elements */
 const beanieList = document.getElementById('beanie-list');
 const astroSignSelect = document.getElementById('astro-sign-select');
+const searchForm = document.getElementById('search-form');
 
 /* State */
 //let error = null;
@@ -36,6 +37,12 @@ async function findBeanies(title, astroSign) {
         displayBeanies();
     }
 }
+searchForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(searchForm);
+
+    findBeanies(formData.get('name'), formData.get('astroSign'));
+});
 
 /* Display Functions */
 function displayBeanies() {
